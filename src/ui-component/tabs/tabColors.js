@@ -1,3 +1,17 @@
+
+export const purple = {
+    50: '#F9F7FD',
+    100: '#F3F0FF',
+    200: '#E9DFFB',
+    300: '#C4B5FD',
+    400: '#A78BFA',
+    500: '#8B5CF6',
+    600: '#7C3AED',
+    700: '#6D28D9',
+    800: '#5B21B6',
+    900: '#4C1D95'
+}
+
 export const blue = {
     50: '#F0F7FF',
     100: '#C2E0FF',

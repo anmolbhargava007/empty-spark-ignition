@@ -1,3 +1,4 @@
+
 /**
  * Typography used in theme
  * @param {JsonObject} theme theme customization object
@@ -5,16 +6,16 @@
 
 export default function themeTypography(theme) {
     return {
-        fontFamily: theme?.customization?.fontFamily,
+        fontFamily: "'Inter', 'Roboto', sans-serif",
         h6: {
-            fontWeight: 500,
+            fontWeight: 600,
             color: theme.heading,
             fontSize: '0.75rem'
         },
         h5: {
             fontSize: '0.875rem',
             color: theme.heading,
-            fontWeight: 500
+            fontWeight: 600
         },
         h4: {
             fontSize: '1rem',
@@ -29,12 +30,12 @@ export default function themeTypography(theme) {
         h2: {
             fontSize: '1.5rem',
             color: theme.heading,
-            fontWeight: 700
+            fontWeight: 600
         },
         h1: {
             fontSize: '2.125rem',
             color: theme.heading,
-            fontWeight: 700
+            fontWeight: 600
         },
         subtitle1: {
             fontSize: '0.875rem',
@@ -54,7 +55,8 @@ export default function themeTypography(theme) {
         body1: {
             fontSize: '0.875rem',
             fontWeight: 400,
-            lineHeight: '1.334em'
+            lineHeight: '1.334em',
+            color: theme.darkTextPrimary
         },
         body2: {
             letterSpacing: '0em',
@@ -63,7 +65,8 @@ export default function themeTypography(theme) {
             color: theme.darkTextPrimary
         },
         button: {
-            textTransform: 'capitalize'
+            textTransform: 'none',
+            fontWeight: 500
         },
         customInput: {
             marginTop: 1,
@@ -98,7 +101,7 @@ export default function themeTypography(theme) {
         },
         menuCaption: {
             fontSize: '0.875rem',
-            fontWeight: 500,
+            fontWeight: 600,
             color: theme.heading,
             padding: '6px',
             textTransform: 'capitalize',

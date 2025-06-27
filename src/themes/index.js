@@ -1,3 +1,4 @@
+
 import { createTheme } from '@mui/material/styles'
 
 // assets
@@ -20,24 +21,24 @@ export const theme = (customization) => {
         ? {
               colors: color,
               heading: color.paper,
-              paper: color.darkPrimaryLight,
-              backgroundDefault: color.darkPaper,
+              paper: color.darkPaper,
+              backgroundDefault: color.darkBackground,
               background: color.darkPrimaryLight,
-              darkTextPrimary: color.paper,
-              darkTextSecondary: color.paper,
-              textDark: color.paper,
+              darkTextPrimary: color.darkTextPrimary,
+              darkTextSecondary: color.darkTextSecondary,
+              textDark: color.darkTextPrimary,
               menuSelected: color.darkSecondaryDark,
               menuSelectedBack: color.darkSecondaryLight,
-              divider: color.darkPaper,
+              divider: color.darkLevel1,
               customization
           }
         : {
               colors: color,
               heading: color.grey900,
               paper: color.paper,
-              backgroundDefault: color.paper,
-              background: color.primaryLight,
-              darkTextPrimary: color.grey700,
+              backgroundDefault: '#F9F7FD',
+              background: color.paper,
+              darkTextPrimary: color.grey600,
               darkTextSecondary: color.grey500,
               textDark: color.grey900,
               menuSelected: color.secondaryDark,

@@ -1,32 +1,35 @@
+
 export default function componentStyleOverrides(theme) {
-    const bgColor = theme.colors?.grey50
+    const bgColor = theme?.customization?.isDarkMode ? theme.colors?.darkPrimary800 : '#F9F7FD'
+    const inputBgColor = theme?.customization?.isDarkMode ? theme.colors?.darkPrimary800 : '#FFFFFF'
+    
     return {
         MuiCssBaseline: {
             styleOverrides: {
                 body: {
                     scrollbarWidth: 'thin',
                     scrollbarColor: theme?.customization?.isDarkMode
-                        ? `${theme.colors?.grey500} ${theme.colors?.darkPrimaryMain}`
-                        : `${theme.colors?.grey300} ${theme.paper}`,
+                        ? `${theme.colors?.primaryMain} ${theme.colors?.darkPrimaryMain}`
+                        : `${theme.colors?.primaryMain} ${theme.paper}`,
                     '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
-                        width: 12,
-                        height: 12,
+                        width: 8,
+                        height: 8,
                         backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPrimaryMain : theme.paper
                     },
                     '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
                         borderRadius: 8,
-                        backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.grey500 : theme.colors?.grey300,
+                        backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.primaryMain : theme.colors?.primaryMain,
                         minHeight: 24,
-                        border: `3px solid ${theme?.customization?.isDarkMode ? theme.colors?.darkPrimaryMain : theme.paper}`
+                        border: `2px solid ${theme?.customization?.isDarkMode ? theme.colors?.darkPrimaryMain : theme.paper}`
                     },
                     '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus': {
-                        backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPrimary200 : theme.colors?.grey500
+                        backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.primaryDark : theme.colors?.primaryDark
                     },
                     '&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active': {
-                        backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPrimary200 : theme.colors?.grey500
+                        backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.primaryDark : theme.colors?.primaryDark
                     },
                     '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover': {
-                        backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPrimary200 : theme.colors?.grey500
+                        backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.primaryDark : theme.colors?.primaryDark
                     },
                     '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
                         backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPrimaryMain : theme.paper
@@ -38,7 +41,13 @@ export default function componentStyleOverrides(theme) {
             styleOverrides: {
                 root: {
                     fontWeight: 500,
-                    borderRadius: '4px'
+                    borderRadius: '4px',
+                    textTransform: 'none',
+                    backgroundColor: theme.colors?.primaryMain,
+                    color: '#ffffff',
+                    '&:hover': {
+                        backgroundColor: theme.colors?.primaryDark,
+                    }
                 }
             }
         },
@@ -56,7 +65,8 @@ export default function componentStyleOverrides(theme) {
             },
             styleOverrides: {
                 root: {
-                    backgroundImage: 'none'
+                    backgroundImage: 'none',
+                    backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPaper : '#ffffff'
                 },
                 rounded: {
                     borderRadius: `${theme?.customization?.borderRadius}px`
@@ -67,24 +77,29 @@ export default function componentStyleOverrides(theme) {
             styleOverrides: {
                 root: {
                     color: theme.colors?.textDark,
-                    padding: '24px'
+                    padding: '24px',
+                    backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPaper : '#ffffff'
                 },
                 title: {
-                    fontSize: '1.125rem'
+                    fontSize: '1.125rem',
+                    fontWeight: 600,
+                    color: theme.heading
                 }
             }
         },
         MuiCardContent: {
             styleOverrides: {
                 root: {
-                    padding: '24px'
+                    padding: '24px',
+                    backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPaper : '#ffffff'
                 }
             }
         },
         MuiCardActions: {
             styleOverrides: {
                 root: {
-                    padding: '24px'
+                    padding: '24px',
+                    backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPaper : '#ffffff'
                 }
             }
         },
@@ -94,21 +109,24 @@ export default function componentStyleOverrides(theme) {
                     color: theme.darkTextPrimary,
                     paddingTop: '10px',
                     paddingBottom: '10px',
+                    borderRadius: '8px',
+                    margin: '2px 8px',
                     '&.Mui-selected': {
-                        color: theme.menuSelected,
-                        backgroundColor: theme.menuSelectedBack,
+                        color: theme.colors?.primaryDark,
+                        backgroundColor: theme.colors?.secondaryLight,
+                        fontWeight: 600,
                         '&:hover': {
-                            backgroundColor: theme.menuSelectedBack
+                            backgroundColor: theme.colors?.secondaryLight
                         },
                         '& .MuiListItemIcon-root': {
-                            color: theme.menuSelected
+                            color: theme.colors?.primaryDark
                         }
                     },
                     '&:hover': {
-                        backgroundColor: theme.menuSelectedBack,
-                        color: theme.menuSelected,
+                        backgroundColor: theme.colors?.secondaryLight,
+                        color: theme.colors?.primaryDark,
                         '& .MuiListItemIcon-root': {
-                            color: theme.menuSelected
+                            color: theme.colors?.primaryDark
                         }
                     }
                 }
@@ -125,7 +143,8 @@ export default function componentStyleOverrides(theme) {
         MuiListItemText: {
             styleOverrides: {
                 primary: {
-                    color: theme.textDark
+                    color: theme.textDark,
+                    fontWeight: 500
                 }
             }
         },
@@ -146,23 +165,26 @@ export default function componentStyleOverrides(theme) {
         MuiOutlinedInput: {
             styleOverrides: {
                 root: {
-                    background: theme?.customization?.isDarkMode ? theme.colors?.darkPrimary800 : bgColor,
-                    borderRadius: `${theme?.customization?.borderRadius}px`,
+                    background: inputBgColor,
+                    borderRadius: '8px',
                     '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: theme.colors?.grey400
+                        borderColor: theme.colors?.grey300
                     },
                     '&:hover $notchedOutline': {
                         borderColor: theme.colors?.primaryLight
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: theme.colors?.primaryMain
                     },
                     '&.MuiInputBase-multiline': {
                         padding: 1
                     }
                 },
                 input: {
-                    fontWeight: 500,
-                    background: theme?.customization?.isDarkMode ? theme.colors?.darkPrimary800 : bgColor,
+                    fontWeight: 400,
+                    background: inputBgColor,
                     padding: '15.5px 14px',
-                    borderRadius: `${theme?.customization?.borderRadius}px`,
+                    borderRadius: '8px',
                     '&.MuiInputBase-inputSizeSmall': {
                         padding: '10px 14px',
                         '&.MuiInputBase-inputAdornedStart': {
@@ -174,13 +196,14 @@ export default function componentStyleOverrides(theme) {
                     paddingLeft: 4
                 },
                 notchedOutline: {
-                    borderRadius: `${theme?.customization?.borderRadius}px`
+                    borderRadius: '8px'
                 }
             }
         },
         MuiSlider: {
             styleOverrides: {
                 root: {
+                    color: theme.colors?.primaryMain,
                     '&.Mui-disabled': {
                         color: theme.colors?.grey300
                     }
@@ -213,6 +236,8 @@ export default function componentStyleOverrides(theme) {
         MuiChip: {
             styleOverrides: {
                 root: {
+                    backgroundColor: theme.colors?.secondaryLight,
+                    color: theme.colors?.primaryDark,
                     '&.MuiChip-deletable .MuiChip-deleteIcon': {
                         color: 'inherit'
                     }
@@ -222,8 +247,9 @@ export default function componentStyleOverrides(theme) {
         MuiTooltip: {
             styleOverrides: {
                 tooltip: {
-                    color: theme?.customization?.isDarkMode ? theme.colors?.paper : theme.paper,
-                    background: theme.colors?.grey700
+                    color: '#ffffff',
+                    background: '#334155',
+                    fontSize: '0.75rem'
                 }
             }
         },
@@ -231,7 +257,10 @@ export default function componentStyleOverrides(theme) {
             styleOverrides: {
                 option: {
                     '&:hover': {
-                        background: theme?.customization?.isDarkMode ? '#233345 !important' : ''
+                        background: theme?.customization?.isDarkMode ? theme.colors?.darkSecondaryLight : theme.colors?.secondaryLight
+                    },
+                    '&.Mui-focused': {
+                        background: theme?.customization?.isDarkMode ? theme.colors?.darkSecondaryLight : theme.colors?.secondaryLight
                     }
                 }
             }
