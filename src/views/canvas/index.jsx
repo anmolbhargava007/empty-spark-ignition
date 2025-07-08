@@ -103,7 +103,9 @@ const Canvas = () => {
     const createNewChatflowApi = useApi(chatflowsApi.createNewChatflow)
     const updateChatflowApi = useApi(chatflowsApi.updateChatflow)
     const getSpecificChatflowApi = useApi(chatflowsApi.getSpecificChatflow)
-
+    const updateDataInOurDb = useApi(chatflowsApi.updateDataInOurDb)
+    const saveDataInOurDb = useApi(chatflowsApi.saveDataInOurDb)
+    const deletAgentFromLocalDb = useApi(chatflowsApi.deletAgentFromLocalDb)
     // ==============================|| Events & Actions ||============================== //
 
     const onConnect = (params) => {
@@ -173,11 +175,18 @@ const Canvas = () => {
             confirmButtonName: 'Delete',
             cancelButtonName: 'Cancel'
         }
+
+        const confirmPayloadForLocalDb = {
+            session_id: chatflowId,
+            "is_active": false
+          }
+
         const isConfirmed = await confirm(confirmPayload)
 
         if (isConfirmed) {
             try {
                 await chatflowsApi.deleteChatflow(chatflow.id)
+                await deletAgentFromLocalDb.request(confirmPayloadForLocalDb)
                 localStorage.removeItem(`${chatflow.id}_INTERNAL`)
                 navigate(isAgentCanvas ? '/agentflows' : '/')
             } catch (error) {
@@ -198,7 +207,7 @@ const Canvas = () => {
         }
     }
 
-    const handleSaveFlow = (chatflowName) => {
+    const handleSaveFlow = async (chatflowName) => {
         if (reactFlowInstance) {
             const nodes = reactFlowInstance.getNodes().map((node) => {
                 const nodeData = cloneDeep(node.data)
@@ -218,24 +227,63 @@ const Canvas = () => {
             const flowData = JSON.stringify(rfInstanceObject)
 
             if (!chatflow.id) {
-                const newChatflowBody = {
+                const chatflowType = isAgentCanvas ? 'MULTIAGENT' : 'CHATFLOW'
+
+                const payload1 = {
                     name: chatflowName,
                     deployed: false,
                     isPublic: false,
                     flowData,
-                    type: isAgentCanvas ? 'MULTIAGENT' : 'CHATFLOW'
+                    type: chatflowType
                 }
-                createNewChatflowApi.request(newChatflowBody)
+
+                try {
+                    const response1 = await createNewChatflowApi.request(payload1)
+
+                    const createdFlowId = response1.id
+                    const updatedDate = response1.updatedDate
+
+                    const payload2 = {
+                        agent_name: chatflowName,
+                        descriptions: updatedDate,
+                        agents_status: 'active',
+                        aimodel_id: 0,
+                        aivector_id: 0,
+                        integrator_ids: [1, 2],
+                        guardrail_ids: [1, 2],
+                        session_id: createdFlowId,
+                        flow_type: chatflowType,
+                        flow_data: flowData,
+                        is_deployed: false,
+                        is_public: false,
+                        is_active: true,
+                    }
+
+                    const response2 = await saveDataInOurDb.request(payload2)
+
+                    console.log('✅ Flow created:', response1)
+                    console.log('✅ Saved in local DB:', response2)
+                } catch (error) {
+                    console.error('❌ Error saving flow:', error)
+                }
             } else {
                 const updateBody = {
                     name: chatflowName,
                     flowData
                 }
-                console.log("MRP--->")
-                updateChatflowApi.request(chatflow.id, updateBody)
+
+                const updateBodyInLocal = {
+                    agent_name: chatflowName,
+                    session_id: chatflow.id,
+                    flow_data: flowData,
+                }
+
+                await updateChatflowApi.request(chatflow.id, updateBody)
+                await updateDataInOurDb.request(updateBodyInLocal)
             }
         }
     }
+
 
     // eslint-disable-next-line
     const onNodeClick = useCallback((event, clickedNode) => {

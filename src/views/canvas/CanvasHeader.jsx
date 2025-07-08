@@ -63,6 +63,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, handleSaveFlow, handleDeleteFlo
     const title = isAgentCanvas ? 'Agents' : 'Chatflow'
 
     const updateChatflowApi = useApi(chatflowsApi.updateChatflow)
+    const updateDataInOurDb = useApi(chatflowsApi.updateDataInOurDb)
     const canvas = useSelector((state) => state.canvas)
 
     const onSettingsItemClick = (setting) => {
@@ -151,14 +152,25 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, handleSaveFlow, handleDeleteFlo
         handleLoadFlow(file)
     }
 
-    const submitFlowName = () => {
+    const submitFlowName = async () => {
         if (chatflow.id) {
             const updateBody = {
                 name: flowNameRef.current.value
             }
-            updateChatflowApi.request(chatflow.id, updateBody)
+    
+            const updateBodyInLocal = {
+                session_id: chatflow.id,
+                agent_name: flowNameRef.current.value
+            }
+    
+            try {
+                await updateChatflowApi.request(chatflow.id, updateBody)
+                await updateDataInOurDb.request(updateBodyInLocal)
+            } catch (error) {
+                console.error('❌ Error updating:', error)
+            }
         }
-    }
+    }  
 
     const onAPIDialogClick = () => {
         // If file type is file, isFormDataRequired = true
