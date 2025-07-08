@@ -66,13 +66,27 @@ export default function componentStyleOverrides(theme) {
             styleOverrides: {
                 root: {
                     backgroundImage: 'none',
-                    backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPaper : '#ffffff'
+                    backgroundColor: '#faf5ff'
                 },
                 rounded: {
                     borderRadius: `${theme?.customization?.borderRadius}px`
                 }
             }
         },
+        MuiBox: {
+            styleOverrides: {
+              root: {
+                backgroundColor: '#fdfaff !important'
+            }
+            }
+          },          
+        MuiGrid: {
+            styleOverrides: {
+              root: {
+                backgroundColor: '#faf5ff' // Very light purple
+              }
+            }
+          },          
         MuiCardHeader: {
             styleOverrides: {
                 root: {
@@ -91,10 +105,16 @@ export default function componentStyleOverrides(theme) {
             styleOverrides: {
                 root: {
                     padding: '24px',
-                    backgroundColor: theme?.customization?.isDarkMode ? theme.colors?.darkPaper : '#ffffff'
                 }
             }
         },
+        MuiTableBody: {
+            styleOverrides: {
+              root: {
+                backgroundColor: '#fdfaff !important'
+            }
+            }
+          },
         MuiCardActions: {
             styleOverrides: {
                 root: {
@@ -150,6 +170,7 @@ export default function componentStyleOverrides(theme) {
         },
         MuiInputBase: {
             styleOverrides: {
+                backgroundColor: '#faf5ff !important',
                 input: {
                     color: theme.textDark,
                     '&::placeholder': {

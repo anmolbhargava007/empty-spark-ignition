@@ -285,9 +285,9 @@ const Documents = () => {
                                                                     width: 30,
                                                                     height: 30,
                                                                     borderRadius: '50%',
-                                                                    backgroundColor: customization.isDarkMode
-                                                                        ? theme.palette.common.white
-                                                                        : theme.palette.grey[300] + 75
+                                                                    // backgroundColor: customization.isDarkMode
+                                                                    //     ? theme.palette.common.white
+                                                                    //     : theme.palette.grey[300] + 75
                                                                 }}
                                                             >
                                                                 <img

@@ -9,16 +9,12 @@ import { Box, Grid, Typography, useTheme } from '@mui/material'
 import MainCard from '@/ui-component/cards/MainCard'
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-    background: theme.palette.card.main,
+    // background: theme.palette.card.main,
     color: theme.darkTextPrimary,
     overflow: 'auto',
     position: 'relative',
     boxShadow: '0 2px 14px 0 rgb(32 40 45 / 8%)',
     cursor: 'pointer',
-    '&:hover': {
-        background: theme.palette.card.hover,
-        boxShadow: '0 2px 14px 0 rgb(32 40 45 / 20%)'
-    },
     height: '100%',
     minHeight: '160px',
     maxHeight: '300px',
