@@ -157,6 +157,10 @@ const ProfileSection = ({ username, handleLogout }) => {
     const theme = useTheme()
 
     const customization = useSelector((state) => state.customization)
+    
+    // Get user data from localStorage
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}')
+    const expiryDate = userData.expiry_date
 
     const [open, setOpen] = useState(false)
     const [aboutDialogOpen, setAboutDialogOpen] = useState(false)
@@ -363,6 +367,11 @@ const ProfileSection = ({ username, handleLogout }) => {
                                             <Typography component='span' variant='h4'>
                                                 {username}
                                             </Typography>
+                                            {expiryDate && (
+                                                <Typography variant='caption' color='textSecondary' sx={{ display: 'block', mt: 0.5 }}>
+                                                    Expires: {expiryDate}
+                                                </Typography>
+                                            )}
                                         </Box>
                                     )}
                                     <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
