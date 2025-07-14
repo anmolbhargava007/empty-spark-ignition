@@ -242,10 +242,12 @@ const Canvas = () => {
 
                     const createdFlowId = response1.id
                     const updatedDate = response1.updatedDate
+                    const isDeployed = response1.deployed
+                    const isPublic = response1.isPublic
 
                     const payload2 = {
                         agent_name: chatflowName,
-                        descriptions: updatedDate,
+                        descriptions: chatflowName,
                         agents_status: 'active',
                         aimodel_id: 0,
                         aivector_id: 0,
@@ -254,15 +256,13 @@ const Canvas = () => {
                         session_id: createdFlowId,
                         flow_type: chatflowType,
                         flow_data: flowData,
-                        is_deployed: false,
-                        is_public: false,
+                        is_deployed: isDeployed,
+                        is_public: isPublic,
                         is_active: true,
+                        created_at: updatedDate
                     }
 
-                    const response2 = await saveDataInOurDb.request(payload2)
-
-                    console.log('✅ Flow created:', response1)
-                    console.log('✅ Saved in local DB:', response2)
+                    await saveDataInOurDb.request(payload2)
                 } catch (error) {
                     console.error('❌ Error saving flow:', error)
                 }
