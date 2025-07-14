@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Box, Typography, Alert, CircularProgress } from '@mui/material'
+import { Box, Typography, Alert, CircularProgress, TextField } from '@mui/material'
 import { signUp } from '@/api/auth'
-import Input from '@/ui-component/input/Input'
-import StyledButton from '@/ui-component/button/StyledButton'
+import { StyledButton } from '@/ui-component/button/StyledButton'
 import MainCard from '@/ui-component/cards/MainCard'
+import logo from '@/assets/images/logo.png'
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -17,8 +17,8 @@ const Signup = () => {
         is_active: true
     })
     const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
         setFormData({
@@ -37,7 +37,7 @@ const Signup = () => {
 
         try {
             const response = await signUp(formData)
-            
+
             if (response.success) {
                 setSuccess('Account created successfully! Redirecting to login...')
                 setTimeout(() => {
@@ -60,108 +60,132 @@ const Signup = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, hsl(var(--secondary) / 0.1) 100%)',
-                p: 2
+                background: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)',
+                px: 2,
             }}
         >
-            <MainCard
+            <Box
                 sx={{
-                    maxWidth: 400,
                     width: '100%',
-                    p: 4
+                    maxWidth: 520,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
                 }}
             >
-                <Box sx={{ textAlign: 'center', mb: 4 }}>
-                    <Typography variant="h3" component="h1" sx={{ mb: 1, color: 'hsl(var(--primary))' }}>
-                        Create Account
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary">
-                        Join us today
-                    </Typography>
-                </Box>
+                <Box
+                    component="img"
+                    src={logo}
+                    alt="Logo"
+                    sx={{
+                        height: 64,
+                        mb: 3,
+                    }}
+                />
 
-                {error && (
-                    <Alert severity="error" sx={{ mb: 3 }}>
-                        {error}
-                    </Alert>
-                )}
+                <MainCard
+                    sx={{
+                        width: '100%',
+                        p: 4,
+                        boxShadow: 3,
+                        borderRadius: 4,
+                        backgroundColor: '#fff',
+                    }}
+                >
+                    <Box sx={{ textAlign: 'center', mb: 4 }}>
+                        <Typography variant="h4" component="h1" sx={{ mb: 1, color: '#111827' }}>
+                            Create Account
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Join us today
+                        </Typography>
+                    </Box>
 
-                {success && (
-                    <Alert severity="success" sx={{ mb: 3 }}>
-                        {success}
-                    </Alert>
-                )}
+                    {error && (
+                        <Alert severity="error" sx={{ mb: 3 }}>
+                            {error}
+                        </Alert>
+                    )}
 
-                <Box component="form" onSubmit={handleSubmit}>
-                    <Input
-                        label="Full Name"
-                        name="user_name"
-                        value={formData.user_name}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        sx={{ mb: 3 }}
-                    />
+                    {success && (
+                        <Alert severity="success" sx={{ mb: 3 }}>
+                            {success}
+                        </Alert>
+                    )}
 
-                    <Input
-                        label="Email"
-                        name="user_email"
-                        type="email"
-                        value={formData.user_email}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        sx={{ mb: 3 }}
-                    />
+                    <Box component="form" onSubmit={handleSubmit}>
+                        <TextField
+                            label="Full Name"
+                            name="user_name"
+                            value={formData.user_name}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                            variant="outlined"
+                            sx={{ mb: 3 }}
+                        />
 
-                    <Input
-                        label="Password"
-                        name="user_pwd"
-                        type="password"
-                        value={formData.user_pwd}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        sx={{ mb: 3 }}
-                    />
+                        <TextField
+                            label="Email"
+                            name="user_email"
+                            type="email"
+                            value={formData.user_email}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                            variant="outlined"
+                            sx={{ mb: 3 }}
+                        />
 
-                    <Input
-                        label="Mobile Number"
-                        name="user_mobile"
-                        value={formData.user_mobile}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        sx={{ mb: 4 }}
-                    />
+                        <TextField
+                            label="Password"
+                            name="user_pwd"
+                            type="password"
+                            value={formData.user_pwd}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                            variant="outlined"
+                            sx={{ mb: 3 }}
+                        />
 
-                    <StyledButton
-                        type="submit"
-                        variant="contained"
-                        fullWidth
-                        disabled={loading}
-                        sx={{ mb: 3, py: 1.5 }}
-                    >
-                        {loading ? <CircularProgress size={24} /> : 'Create Account'}
-                    </StyledButton>
+                        <TextField
+                            label="Mobile Number"
+                            name="user_mobile"
+                            value={formData.user_mobile}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                            variant="outlined"
+                            sx={{ mb: 4 }}
+                        />
 
-                    <Box sx={{ textAlign: 'center' }}>
-                        <Typography variant="body2" color="textSecondary">
+                        <StyledButton
+                            type="submit"
+                            variant="contained"
+                            fullWidth
+                            disabled={loading}
+                            sx={{ mb: 3, py: 1.5 }}
+                        >
+                            {loading ? <CircularProgress size={24} /> : 'Create Account'}
+                        </StyledButton>
+
+                        <Typography variant="body2" align="center" color="textSecondary">
                             Already have an account?{' '}
-                            <Link 
-                                to="/login" 
-                                style={{ 
-                                    color: 'hsl(var(--primary))',
+                            <Link
+                                to="/login"
+                                style={{
+                                    color: '#3b82f6',
                                     textDecoration: 'none',
-                                    fontWeight: 600
+                                    fontWeight: 600,
                                 }}
                             >
                                 Sign In
                             </Link>
                         </Typography>
                     </Box>
-                </Box>
-            </MainCard>
+                </MainCard>
+            </Box>
         </Box>
     )
 }

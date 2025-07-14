@@ -1,11 +1,11 @@
-import apiClient from './client'
+import { apiClientNodeJs } from './client'
 
 export const signIn = async (credentials) => {
-    const response = await apiClient.post('/signin', credentials)
+    const response = await apiClientNodeJs.post('/signin', credentials)
     return response.data
 }
 
 export const signUp = async (userData) => {
-    const response = await apiClient.post('/signup', userData)
+    const response = await apiClientNodeJs.post('/signup', userData)
     return response.data
 }

@@ -21,23 +21,28 @@ const AuthGuard = ({ children }) => {
 const AuthRoutes = {
     path: '/',
     children: [
-        {
-            path: '/login',
-            element: (
-                <AuthGuard>
-                    <Login />
-                </AuthGuard>
-            )
-        },
-        {
-            path: '/signup',
-            element: (
-                <AuthGuard>
-                    <Signup />
-                </AuthGuard>
-            )
-        }
+      {
+        index: true,
+        element: <Navigate to="/login" replace />
+      },
+      {
+        path: 'login',
+        element: (
+          <AuthGuard>
+            <Login />
+          </AuthGuard>
+        )
+      },
+      {
+        path: 'signup',
+        element: (
+          <AuthGuard>
+            <Signup />
+          </AuthGuard>
+        )
+      }
     ]
-}
+  }
+  
 
 export default AuthRoutes

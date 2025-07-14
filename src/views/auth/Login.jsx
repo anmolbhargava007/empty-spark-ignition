@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Box, Typography, Alert, CircularProgress } from '@mui/material'
+import { Box, Typography, Alert, CircularProgress, TextField } from '@mui/material'
 import { useAuth } from '@/contexts/AuthContext'
 import { signIn } from '@/api/auth'
-import Input from '@/ui-component/input/Input'
-import StyledButton from '@/ui-component/button/StyledButton'
+import { StyledButton } from '@/ui-component/button/StyledButton'
 import MainCard from '@/ui-component/cards/MainCard'
+import logo from '@/assets/images/logo.png'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -32,7 +32,7 @@ const Login = () => {
 
         try {
             const response = await signIn(formData)
-            
+
             if (response.success) {
                 const userData = response.data[0]
                 login(userData)
@@ -54,82 +54,106 @@ const Login = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, hsl(var(--secondary) / 0.1) 100%)',
-                p: 2
+                background: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)',
+                px: 2,
             }}
         >
-            <MainCard
+            <Box
                 sx={{
-                    maxWidth: 400,
                     width: '100%',
-                    p: 4
+                    maxWidth: 520,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
                 }}
             >
-                <Box sx={{ textAlign: 'center', mb: 4 }}>
-                    <Typography variant="h3" component="h1" sx={{ mb: 1, color: 'hsl(var(--primary))' }}>
-                        Welcome Back
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary">
-                        Sign in to your account
-                    </Typography>
-                </Box>
+                <Box
+                    component="img"
+                    src={logo}
+                    alt="Logo"
+                    sx={{
+                        height: 64,
+                        mb: 3,
+                    }}
+                />
 
-                {error && (
-                    <Alert severity="error" sx={{ mb: 3 }}>
-                        {error}
-                    </Alert>
-                )}
+                <MainCard
+                    sx={{
+                        width: '100%',
+                        p: 4,
+                        boxShadow: 3,
+                        borderRadius: 4,
+                        backgroundColor: '#fff',
+                    }}
+                >
+                    <Box sx={{ textAlign: 'center', mb: 4 }}>
+                        <Typography variant="h4" component="h1" sx={{ mb: 1, color: '#111827' }}>
+                            Welcome Back
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Sign in to your account
+                        </Typography>
+                    </Box>
 
-                <Box component="form" onSubmit={handleSubmit}>
-                    <Input
-                        label="Email"
-                        name="user_email"
-                        type="email"
-                        value={formData.user_email}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        sx={{ mb: 3 }}
-                    />
+                    {error && (
+                        <Alert severity="error" sx={{ mb: 3 }}>
+                            {error}
+                        </Alert>
+                    )}
 
-                    <Input
-                        label="Password"
-                        name="user_pwd"
-                        type="password"
-                        value={formData.user_pwd}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        sx={{ mb: 4 }}
-                    />
+                    <Box component="form" onSubmit={handleSubmit}>
+                        <TextField
+                            label="Email"
+                            name="user_email"
+                            type="email"
+                            value={formData.user_email}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                            variant="outlined"
+                            size="medium"
+                            sx={{ mb: 3, borderRadius: 2 }}
+                        />
 
-                    <StyledButton
-                        type="submit"
-                        variant="contained"
-                        fullWidth
-                        disabled={loading}
-                        sx={{ mb: 3, py: 1.5 }}
-                    >
-                        {loading ? <CircularProgress size={24} /> : 'Sign In'}
-                    </StyledButton>
+                        <TextField
+                            label="Password"
+                            name="user_pwd"
+                            type="password"
+                            value={formData.user_pwd}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                            variant="outlined"
+                            size="medium"
+                            sx={{ mb: 4, borderRadius: 2 }}
+                        />
 
-                    <Box sx={{ textAlign: 'center' }}>
-                        <Typography variant="body2" color="textSecondary">
+                        <StyledButton
+                            type="submit"
+                            variant="contained"
+                            fullWidth
+                            disabled={loading}
+                            sx={{ mb: 3, py: 1.5 }}
+                        >
+                            {loading ? <CircularProgress size={24} /> : 'Sign In'}
+                        </StyledButton>
+
+                        <Typography variant="body2" align="center" color="textSecondary">
                             New user?{' '}
-                            <Link 
-                                to="/signup" 
-                                style={{ 
-                                    color: 'hsl(var(--primary))',
+                            <Link
+                                to="/signup"
+                                style={{
+                                    color: '#3b82f6',
                                     textDecoration: 'none',
-                                    fontWeight: 600
+                                    fontWeight: 600,
                                 }}
                             >
                                 Register
                             </Link>
                         </Typography>
                     </Box>
-                </Box>
-            </MainCard>
+                </MainCard>
+            </Box>
         </Box>
     )
 }

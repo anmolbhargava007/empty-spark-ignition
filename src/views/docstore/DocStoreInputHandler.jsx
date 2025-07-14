@@ -10,7 +10,7 @@ import { IconRefresh, IconArrowsMaximize, IconAlertTriangle } from '@tabler/icon
 import { Dropdown } from '@/ui-component/dropdown/Dropdown'
 import { MultiDropdown } from '@/ui-component/dropdown/MultiDropdown'
 import { AsyncDropdown } from '@/ui-component/dropdown/AsyncDropdown'
-import { Input } from '@/ui-component/input/Input'
+import Input from '@/ui-component/input/Input'
 import { DataGrid } from '@/ui-component/grid/DataGrid'
 import { File } from '@/ui-component/file/File'
 import { SwitchInput } from '@/ui-component/switch/Switch'

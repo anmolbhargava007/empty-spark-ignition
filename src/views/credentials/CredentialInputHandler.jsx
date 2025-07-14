@@ -8,7 +8,7 @@ import { IconArrowsMaximize, IconAlertTriangle } from '@tabler/icons-react'
 
 // project import
 import { Dropdown } from '@/ui-component/dropdown/Dropdown'
-import { Input } from '@/ui-component/input/Input'
+import Input from '@/ui-component/input/Input'
 import { SwitchInput } from '@/ui-component/switch/Switch'
 import { JsonEditorInput } from '@/ui-component/json/JsonEditor'
 import { TooltipWithParser } from '@/ui-component/tooltip/TooltipWithParser'

@@ -51,6 +51,7 @@ import exportImportApi from '@/api/exportimport'
 import useApi from '@/hooks/useApi'
 import { getErrorMessage } from '@/utils/errorHandler'
 import { useNavigate } from 'react-router-dom'
+import { IconUser } from '@tabler/icons-react'
 
 const dataToExport = ['Chatflows', 'Agentflows', 'Tools', 'Variables', 'Assistants']
 
@@ -157,9 +158,10 @@ const ProfileSection = ({ username, handleLogout }) => {
     const theme = useTheme()
 
     const customization = useSelector((state) => state.customization)
-    
+
     // Get user data from localStorage
     const userData = JSON.parse(localStorage.getItem('userData') || '{}')
+    console.log(userData)
     const expiryDate = userData.expiry_date
 
     const [open, setOpen] = useState(false)
@@ -361,88 +363,115 @@ const ProfileSection = ({ username, handleLogout }) => {
                     <Transitions in={open} {...TransitionProps}>
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
-                                <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
+                                <MainCard
+                                    border={false}
+                                    elevation={16}
+                                    content={false}
+                                    boxShadow
+                                    shadow={theme.shadows[16]}
+                                    sx={{ borderRadius: 4, overflow: 'hidden', backgroundColor: '#fff' }}
+                                >
                                     {username && (
-                                        <Box sx={{ p: 2 }}>
-                                            <Typography component='span' variant='h4'>
-                                                {username}
-                                            </Typography>
-                                            {expiryDate && (
-                                                <Typography variant='caption' color='textSecondary' sx={{ display: 'block', mt: 0.5 }}>
-                                                    Expires: {expiryDate}
-                                                </Typography>
-                                            )}
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                px: 3,
+                                                py: 2,
+                                                borderBottom: `1px solid ${theme.palette.divider}`,
+                                                backgroundColor: theme.palette.grey[100]
+                                            }}
+                                        >
+                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                <IconUser size={17} stroke={1.5} />
+                                                <Box>
+                                                    <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                                                        {username}
+                                                    </Typography>
+                                                    {expiryDate && (
+                                                        <Typography variant="caption" color="text.secondary">
+                                                            Expires: {expiryDate}
+                                                        </Typography>
+                                                    )}
+                                                </Box>
+                                            </Box>
+                                            <Button
+                                                variant="outlined"
+                                                color="error"
+                                                onClick={handleLogout}
+                                                size="small"
+                                                startIcon={<IconLogout size={18} />}
+                                                sx={{
+                                                    textTransform: 'none',
+                                                    borderRadius: 2,
+                                                    fontWeight: 500,
+                                                    px: 2
+                                                }}
+                                            >
+                                                Logout
+                                            </Button>
                                         </Box>
                                     )}
+
                                     <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
                                         <Box sx={{ p: 2 }}>
-                                            <Divider />
+                                            <Divider sx={{ mb: 2 }} />
+
                                             <List
-                                                component='nav'
+                                                component="nav"
                                                 sx={{
                                                     width: '100%',
                                                     maxWidth: 250,
                                                     minWidth: 200,
-                                                    backgroundColor: theme.palette.background.paper,
-                                                    borderRadius: '10px',
+                                                    borderRadius: 3,
+                                                    backgroundColor: theme.palette.grey[50],
+                                                    boxShadow: theme.shadows[1],
                                                     [theme.breakpoints.down('md')]: {
                                                         minWidth: '100%'
                                                     },
                                                     '& .MuiListItemButton-root': {
-                                                        mt: 0.5
+                                                        mt: 1,
+                                                        px: 2,
+                                                        py: 1.2,
+                                                        borderRadius: 2,
+                                                        transition: 'all 0.2s ease-in-out',
+                                                        '&:hover': {
+                                                            backgroundColor: theme.palette.primary.light,
+                                                            color: theme.palette.primary.contrastText
+                                                        }
                                                     }
                                                 }}
                                             >
-                                                <ListItemButton
-                                                    sx={{ borderRadius: `${customization.borderRadius}px` }}
-                                                    onClick={() => {
-                                                        setExportDialogOpen(true)
-                                                    }}
-                                                >
+                                                <ListItemButton onClick={() => setExportDialogOpen(true)}>
                                                     <ListItemIcon>
-                                                        <IconFileExport stroke={1.5} size='1.3rem' />
+                                                        <IconFileExport stroke={1.5} size="1.3rem" />
                                                     </ListItemIcon>
-                                                    <ListItemText primary={<Typography variant='body2'>Export</Typography>} />
+                                                    <ListItemText primary={<Typography variant="body2">Export</Typography>} />
                                                 </ListItemButton>
-                                                <ListItemButton
-                                                    sx={{ borderRadius: `${customization.borderRadius}px` }}
-                                                    onClick={() => {
-                                                        importAll()
-                                                    }}
-                                                >
+
+                                                <ListItemButton onClick={importAll}>
                                                     <ListItemIcon>
-                                                        <IconFileUpload stroke={1.5} size='1.3rem' />
+                                                        <IconFileUpload stroke={1.5} size="1.3rem" />
                                                     </ListItemIcon>
-                                                    <ListItemText primary={<Typography variant='body2'>Import</Typography>} />
+                                                    <ListItemText primary={<Typography variant="body2">Import</Typography>} />
                                                 </ListItemButton>
-                                                <input ref={inputRef} type='file' hidden onChange={fileChange} accept='.json' />
-                                                {/* <ListItemButton
-                                                    sx={{ borderRadius: `${customization.borderRadius}px` }}
-                                                    onClick={() => {
-                                                        setOpen(false)
-                                                        setAboutDialogOpen(true)
-                                                    }}
-                                                >
-                                                    <ListItemIcon>
-                                                        <IconInfoCircle stroke={1.5} size='1.3rem' />
-                                                    </ListItemIcon>
-                                                    <ListItemText primary={<Typography variant='body2'>About AgentOne</Typography>} />
-                                                </ListItemButton> */}
+
+                                                <input ref={inputRef} type="file" hidden onChange={fileChange} accept=".json" />
+
                                                 {localStorage.getItem('username') && localStorage.getItem('password') && (
-                                                    <ListItemButton
-                                                        sx={{ borderRadius: `${customization.borderRadius}px` }}
-                                                        onClick={handleLogout}
-                                                    >
+                                                    <ListItemButton onClick={handleLogout}>
                                                         <ListItemIcon>
-                                                            <IconLogout stroke={1.5} size='1.3rem' />
+                                                            <IconLogout stroke={1.5} size="1.3rem" />
                                                         </ListItemIcon>
-                                                        <ListItemText primary={<Typography variant='body2'>Logout</Typography>} />
+                                                        <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
                                                     </ListItemButton>
                                                 )}
                                             </List>
                                         </Box>
                                     </PerfectScrollbar>
                                 </MainCard>
+
                             </ClickAwayListener>
                         </Paper>
                     </Transitions>

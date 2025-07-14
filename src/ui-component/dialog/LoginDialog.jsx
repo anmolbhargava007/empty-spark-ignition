@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { Dialog, DialogActions, DialogContent, Typography, DialogTitle } from '@mui/material'
 import { StyledButton } from '@/ui-component/button/StyledButton'
-import { Input } from '@/ui-component/input/Input'
+// import Input from '@/ui-component/input/Input'
 
 const LoginDialog = ({ show, dialogProps, onConfirm }) => {
     const portalElement = document.getElementById('portal')
@@ -40,7 +40,7 @@ const LoginDialog = ({ show, dialogProps, onConfirm }) => {
             </DialogTitle>
             <DialogContent>
                 <Typography>Username</Typography>
-                <Input
+                {/* <Input
                     inputParam={usernameInput}
                     onChange={(newValue) => setUsernameVal(newValue)}
                     value={usernameVal}
@@ -48,7 +48,7 @@ const LoginDialog = ({ show, dialogProps, onConfirm }) => {
                 />
                 <div style={{ marginTop: 20 }}></div>
                 <Typography>Password</Typography>
-                <Input inputParam={passwordInput} onChange={(newValue) => setPasswordVal(newValue)} value={passwordVal} />
+                <Input inputParam={passwordInput} onChange={(newValue) => setPasswordVal(newValue)} value={passwordVal} /> */}
             </DialogContent>
             <DialogActions>
                 <StyledButton variant='contained' onClick={() => onConfirm(usernameVal, passwordVal)}>

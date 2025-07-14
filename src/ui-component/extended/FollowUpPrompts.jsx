@@ -17,7 +17,7 @@ import groqIcon from '@/assets/images/groq.png'
 import ollamaIcon from '@/assets/images/ollama.svg'
 import { TooltipWithParser } from '@/ui-component/tooltip/TooltipWithParser'
 import CredentialInputHandler from '@/views/canvas/CredentialInputHandler'
-import { Input } from '@/ui-component/input/Input'
+import Input from '@/ui-component/input/Input'
 import { AsyncDropdown } from '@/ui-component/dropdown/AsyncDropdown'
 
 // Icons

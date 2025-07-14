@@ -4,7 +4,7 @@ import { FormControl, OutlinedInput, InputBase, Popover } from '@mui/material'
 import SelectVariable from '@/ui-component/json/SelectVariable'
 import { getAvailableNodesForVariable } from '@/utils/genericHelper'
 
-export const Input = ({ inputParam, value, nodes, edges, nodeId, onChange, disabled = false }) => {
+const Input = ({ inputParam, value, nodes, edges, nodeId, onChange, disabled = false }) => {
     const [myValue, setMyValue] = useState(value ?? '')
     const [anchorEl, setAnchorEl] = useState(null)
     const [availableNodesForVariable, setAvailableNodesForVariable] = useState([])
@@ -149,3 +149,5 @@ Input.propTypes = {
     edges: PropTypes.array,
     nodeId: PropTypes.string
 }
+
+export default Input;
