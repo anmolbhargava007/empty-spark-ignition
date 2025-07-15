@@ -10,7 +10,7 @@ const apiClient = axios.create({
 })
 
 const apiClientNodeJs = axios.create({
-    baseURL: `${nodeBaseURL}/api/v1`,
+    baseURL: `${nodeBaseURL}/api/v2`,
     headers: {
         'Content-Type': 'application/json',
         'x-request-from': 'internal'
