@@ -99,6 +99,7 @@ const NavItem = ({ item, level, navType, onClick, onUploadFile }) => {
         <ListItemButton
             {...listItemProps}
             disabled={item.disabled}
+            data-tour={`${item.id}-menu`}
             sx={{
                 borderRadius: `${customization.borderRadius}px`,
                 mb: 0.5,

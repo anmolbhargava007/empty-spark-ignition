@@ -403,7 +403,7 @@ const CanvasHeader = ({ chatflow, isAgentCanvas, handleSaveFlow, handleDeleteFlo
                             </Avatar>
                         </ButtonBase>
                     )}
-                    <ButtonBase title={`Save ${title}`} sx={{ borderRadius: '50%', mr: 2 }}>
+                    <ButtonBase title={`Save ${title}`} sx={{ borderRadius: '50%', mr: 2 }} data-tour={`save-${isAgentCanvas ? 'agentflow' : 'button'}`}>
                         <Avatar
                             variant='rounded'
                             sx={{

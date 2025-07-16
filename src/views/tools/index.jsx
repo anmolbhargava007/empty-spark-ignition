@@ -176,6 +176,7 @@ const Tools = () => {
                                     variant='outlined'
                                     onClick={() => inputRef.current.click()}
                                     startIcon={<IconFileUpload />}
+                                    data-tour="load-tool"
                                     sx={{ borderRadius: 2, height: 40 }}
                                 >
                                     Load
@@ -194,6 +195,7 @@ const Tools = () => {
                                     variant='contained'
                                     onClick={addNew}
                                     startIcon={<IconPlus />}
+                                    data-tour="create-tool"
                                     sx={{ borderRadius: 2, height: 40 }}
                                 >
                                     Create

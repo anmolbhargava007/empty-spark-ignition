@@ -586,7 +586,7 @@ const Canvas = () => {
                 </AppBar>
                 <Box sx={{ pt: '70px', height: '100vh', width: '100%' }}>
                     <div className='reactflow-parent-wrapper'>
-                        <div className='reactflow-wrapper' ref={reactFlowWrapper}>
+                        <div className='reactflow-wrapper' ref={reactFlowWrapper} data-tour={isAgentCanvas ? "agent-canvas" : "canvas-area"}>
                             <ReactFlow
                                 nodes={nodes}
                                 edges={edges}

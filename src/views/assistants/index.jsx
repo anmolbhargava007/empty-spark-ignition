@@ -123,7 +123,9 @@ const Assistants = () => {
             <MainCard>
                 <Stack flexDirection='column' sx={{ gap: 3 }}>
                     <ViewHeader title='Assistants' />
-                    <FeatureCards />
+                    <div data-tour="assistant-types">
+                        <FeatureCards />
+                    </div>
                 </Stack>
             </MainCard>
         </>

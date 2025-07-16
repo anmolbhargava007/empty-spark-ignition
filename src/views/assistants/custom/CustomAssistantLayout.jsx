@@ -105,6 +105,7 @@ const CustomAssistantLayout = () => {
                                 sx={{ borderRadius: 2, height: 40 }}
                                 onClick={addNew}
                                 startIcon={<IconPlus />}
+                                data-tour="add-assistant"
                             >
                                 Add
                             </StyledButton>

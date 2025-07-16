@@ -239,6 +239,7 @@ const Credentials = () => {
                                 sx={{ borderRadius: 2, height: '100%' }}
                                 onClick={listCredential}
                                 startIcon={<IconPlus />}
+                                data-tour="add-credential"
                             >
                                 Add Credential
                             </StyledButton>

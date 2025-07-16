@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles'
 // project imports
 import LogoSection from '../LogoSection'
 import ProfileSection from './ProfileSection'
+import ProductTour from '@/components/ProductTour'
 
 // assets
 import { IconMenu2 } from '@tabler/icons-react'
@@ -127,7 +128,9 @@ const Header = ({ handleLeftDrawerToggle }) => {
             </Box>
             <Box sx={{ flexGrow: 1 }} />
             {/* <MaterialUISwitch checked={isDark} onChange={changeDarkMode} /> */}
-            <Box sx={{ ml: 2 }}></Box>
+            <Box sx={{ mr: 2 }}>
+                <ProductTour />
+            </Box>
             <ProfileSection handleLogout={signOutClicked} username={user?.user_name || user?.user_email || ''} />
         </>
     )
