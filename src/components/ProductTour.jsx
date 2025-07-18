@@ -29,6 +29,7 @@ const ProductTour = () => {
             target: '[data-tour="canvas-area"]',
             content: 'This is the canvas where you can drag and drop nodes to build your AI workflow. Connect nodes by dragging from one output to another input.',
             placement: 'center',
+            route: '/canvas'
         },
         {
             target: '[data-tour="save-button"]',
@@ -52,6 +53,7 @@ const ProductTour = () => {
             target: '[data-tour="agent-canvas"]',
             content: 'Similar to chatflows, drag and drop agent nodes here and connect them to create collaborative AI workflows.',
             placement: 'center',
+            route: '/agentcanvas'
         },
         {
             target: '[data-tour="save-agentflow"]',
