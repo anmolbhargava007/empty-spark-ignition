@@ -210,6 +210,7 @@ const Variables = () => {
                                 onClick={addNew}
                                 startIcon={<IconPlus />}
                                 id='btn_createVariable'
+                                data-tour="add-variable"
                             >
                                 Add Variable
                             </StyledButton>

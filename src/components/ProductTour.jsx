@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Button } from '@mui/material'
@@ -9,6 +9,7 @@ const ProductTour = () => {
     const [stepIndex, setStepIndex] = useState(0)
     const navigate = useNavigate()
     const location = useLocation()
+    const [tourReady, setTourReady] = useState(false)
 
     const steps = [
         // Step 1 - Chatflows
@@ -66,14 +67,9 @@ const ProductTour = () => {
         },
         {
             target: '[data-tour="assistant-types"]',
-            content: 'Here you can see different assistant types like Custom, OpenAI, and Azure assistants.',
+            content: 'Here you can see different assistant types like Custom, OpenAI, and Azure assistants. Click on any card to explore.',
             placement: 'bottom',
             route: '/assistants'
-        },
-        {
-            target: '[data-tour="add-assistant"]',
-            content: 'Click the "+ Add" button to create a new assistant with your specific configuration.',
-            placement: 'bottom',
         },
 
         // Step 4 - Marketplace
@@ -84,14 +80,9 @@ const ProductTour = () => {
         },
         {
             target: '[data-tour="marketplace-cards"]',
-            content: 'Browse through available templates. Click on any card to preview it.',
+            content: 'Browse through available templates. Click on any card to preview and use templates.',
             placement: 'bottom',
             route: '/marketplaces'
-        },
-        {
-            target: '[data-tour="use-template"]',
-            content: 'Use the "Use Template" button to instantly create a chatflow from this template.',
-            placement: 'bottom',
         },
 
         // Step 5 - Tools
@@ -137,11 +128,6 @@ const ProductTour = () => {
             placement: 'bottom',
             route: '/variables'
         },
-        {
-            target: '[data-tour="how-to-use"]',
-            content: 'Click "How to Use" to learn about variable usage in your workflows.',
-            placement: 'bottom',
-        },
 
         // Step 8 - API Keys
         {
@@ -154,11 +140,6 @@ const ProductTour = () => {
             content: 'Generate new API keys by clicking the "+ Create Key" button.',
             placement: 'bottom',
             route: '/apikey'
-        },
-        {
-            target: '[data-tour="import-keys"]',
-            content: 'You can also import keys in bulk using the Import option with a JSON file.',
-            placement: 'bottom',
         },
 
         // Step 9 - Document Stores
@@ -184,32 +165,53 @@ const ProductTour = () => {
 
             // Navigate to the required route if specified
             if (nextStep && nextStep.route && location.pathname !== nextStep.route) {
+                setTourReady(false)
                 navigate(nextStep.route)
-                // Small delay to allow route navigation
+                // Delay to allow route navigation and DOM updates
                 setTimeout(() => {
+                    setTourReady(true)
                     setStepIndex(nextStepIndex)
-                }, 100)
+                }, 300)
             } else {
                 setStepIndex(nextStepIndex)
             }
         } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
             setRun(false)
             setStepIndex(0)
+            setTourReady(false)
         }
     }, [navigate, location.pathname, steps])
 
+    // Handle route changes and DOM readiness
+    useEffect(() => {
+        if (run) {
+            setTourReady(false)
+            const timer = setTimeout(() => {
+                setTourReady(true)
+            }, 300)
+            return () => clearTimeout(timer)
+        }
+    }, [location.pathname, run])
+
     const startTour = () => {
-        setRun(true)
         setStepIndex(0)
         // Start from chatflows page
         if (location.pathname !== '/chatflows') {
             navigate('/chatflows')
+            setTimeout(() => {
+                setTourReady(true)
+                setRun(true)
+            }, 300)
+        } else {
+            setTourReady(true)
+            setRun(true)
         }
     }
 
     const stopTour = () => {
         setRun(false)
         setStepIndex(0)
+        setTourReady(false)
     }
 
     return (
@@ -233,7 +235,7 @@ const ProductTour = () => {
             
             <Joyride
                 steps={steps}
-                run={run}
+                run={run && tourReady}
                 stepIndex={stepIndex}
                 callback={handleJoyrideCallback}
                 continuous={true}
@@ -241,6 +243,8 @@ const ProductTour = () => {
                 showSkipButton={true}
                 scrollToFirstStep={true}
                 scrollOffset={100}
+                spotlightClicks={true}
+                disableOverlayClose={false}
                 styles={{
                     options: {
                         primaryColor: '#7c3aed',
