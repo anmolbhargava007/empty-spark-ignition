@@ -169,11 +169,12 @@ const ProductTour = () => {
             if (nextStep && nextStep.route && location.pathname !== nextStep.route) {
                 setTourReady(false)
                 navigate(nextStep.route)
-                // Delay to allow route navigation and DOM updates
+                // Longer delay for canvas routes due to ReactFlow component mounting
+                const delay = nextStep.route.includes('/canvas') ? 1000 : 500
                 setTimeout(() => {
                     setTourReady(true)
                     setStepIndex(nextStepIndex)
-                }, 300)
+                }, delay)
             } else {
                 setStepIndex(nextStepIndex)
             }
@@ -188,9 +189,11 @@ const ProductTour = () => {
     useEffect(() => {
         if (run) {
             setTourReady(false)
+            // Longer delay for canvas routes due to ReactFlow component mounting
+            const delay = location.pathname.includes('/canvas') ? 800 : 400
             const timer = setTimeout(() => {
                 setTourReady(true)
-            }, 300)
+            }, delay)
             return () => clearTimeout(timer)
         }
     }, [location.pathname, run])
