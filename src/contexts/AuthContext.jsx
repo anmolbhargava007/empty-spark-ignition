@@ -32,37 +32,17 @@ const authReducer = (state, action) => {
 const initialState = {
     isAuthenticated: false,
     user: null,
-    loading: true
+    loading: false
 }
 
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState)
 
-    useEffect(() => {
-        // Check if user is already logged in
-        const userData = localStorage.getItem('userData')
-        if (userData) {
-            try {
-                const user = JSON.parse(userData)
-                dispatch({ type: 'LOGIN_SUCCESS', payload: user })
-            } catch (error) {
-                localStorage.removeItem('userData')
-                dispatch({ type: 'SET_LOADING', payload: false })
-            }
-        } else {
-            dispatch({ type: 'SET_LOADING', payload: false })
-        }
-    }, [])
-
     const login = (userData) => {
-        localStorage.setItem('userData', JSON.stringify(userData))
         dispatch({ type: 'LOGIN_SUCCESS', payload: userData })
     }
 
     const logout = () => {
-        localStorage.removeItem('userData')
-        localStorage.removeItem('username')
-        localStorage.removeItem('password')
         dispatch({ type: 'LOGOUT' })
     }
 
