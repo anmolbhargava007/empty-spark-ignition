@@ -80,7 +80,9 @@ export const AuthProvider = ({ children }) => {
     const signin = async (credentials) => {
         setLoading(true)
         try {
+            console.log('Attempting signin with:', credentials)
             const response = await signIn(credentials)
+            console.log('Signin response:', response)
             
             if (response && response.user) {
                 const userData = response.user
