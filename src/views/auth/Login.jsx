@@ -1,21 +1,18 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Box, Typography, Alert, CircularProgress, TextField } from '@mui/material'
 import { useAuth } from '@/contexts/AuthContext'
-import { signIn } from '@/api/auth'
 import { StyledButton } from '@/ui-component/button/StyledButton'
 import MainCard from '@/ui-component/cards/MainCard'
 import logo from '@/assets/images/logo.png'
 
 const Login = () => {
-    const navigate = useNavigate()
-    const { login } = useAuth()
+    const { signin, loading } = useAuth()
     const [formData, setFormData] = useState({
         user_email: '',
         user_pwd: ''
     })
     const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
         setFormData({
@@ -27,23 +24,15 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setLoading(true)
         setError('')
-
-        try {
-            const response = await signIn(formData)
-
-            if (response.success) {
-                const userData = response.data[0]
-                login(userData)
-                navigate('/chatflows')
-            } else {
-                setError(response.msg || 'Login failed')
-            }
-        } catch (error) {
-            setError(error?.response?.data?.msg || 'Login failed. Please try again.')
-        } finally {
-            setLoading(false)
+        
+        const result = await signin({
+            user_email: formData.user_email,
+            user_pwd: formData.user_pwd
+        })
+        
+        if (!result.success && result.error) {
+            setError(result.error)
         }
     }
 

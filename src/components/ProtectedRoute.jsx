@@ -4,7 +4,7 @@ import { Box, CircularProgress } from '@mui/material'
 import PropTypes from 'prop-types'
 
 const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated, loading } = useAuth()
+    const { isAuthenticated, loading, checkFeatureAccess } = useAuth()
 
     if (loading) {
         return (
@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }) => {
         )
     }
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !checkFeatureAccess()) {
         return <Navigate to="/login" replace />
     }
 

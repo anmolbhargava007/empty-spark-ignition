@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Box, Typography, Alert, CircularProgress, TextField } from '@mui/material'
-import { signUp } from '@/api/auth'
+import { useAuth } from '@/contexts/AuthContext'
 import { StyledButton } from '@/ui-component/button/StyledButton'
 import MainCard from '@/ui-component/cards/MainCard'
 import logo from '@/assets/images/logo.png'
 
 const Signup = () => {
-    const navigate = useNavigate()
+    const { signup, loading } = useAuth()
     const [formData, setFormData] = useState({
         user_name: '',
         user_email: '',
@@ -18,7 +18,6 @@ const Signup = () => {
     })
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
-    const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
         setFormData({
@@ -31,25 +30,15 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setLoading(true)
         setError('')
         setSuccess('')
 
-        try {
-            const response = await signUp(formData)
+        const result = await signup(formData)
 
-            if (response.success) {
-                setSuccess('Account created successfully! Redirecting to login...')
-                setTimeout(() => {
-                    navigate('/login')
-                }, 2000)
-            } else {
-                setError(response.msg || 'Signup failed')
-            }
-        } catch (error) {
-            setError(error?.response?.data?.msg || 'Signup failed. Please try again.')
-        } finally {
-            setLoading(false)
+        if (result.success) {
+            setSuccess('Account created successfully! Redirecting to login...')
+        } else if (result.error) {
+            setError(result.error)
         }
     }
 
